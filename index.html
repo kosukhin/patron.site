@@ -6,8 +6,24 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script type="importmap">
+    {
+      "imports": {
+        "patron-oop": "https://cdn.jsdelivr.net/npm/patron-oop@latest/dist/patron.min.mjs",
+        "patron-web-api": "https://cdn.jsdelivr.net/npm/patron-web-api@latest/dist/patron-web-api.min.mjs",
+        "patron-components": "https://cdn.jsdelivr.net/npm/patron-oop-components@latest/dist/patron-components.min.mjs"
+      }
+    }
+  </script>
 </head>
 <body>
-    Patron site
+    <div class="menu">
+        <a href="/">Главная</a>
+        <a href="/guest">Guest</a>
+        <a href="/patron">Patron</a>
+        <a href="/source">Source</a>
+    </div>
+    <div class="page-area"></div>
+    <script src="./assets/js/entrypoints/index.mjs" type="module"></script>
 </body>
 </html>
