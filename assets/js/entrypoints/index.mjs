@@ -65,6 +65,11 @@ navigation.routes(
             page: new Page('Источник'),
         },
         {
+            url: '/factory',
+            template: 'pages/factory.html',
+            page: new Page('Фабрика'),
+        },
+        {
             url: '',
             template: 'pages/404.html',
             page: new Page('Страница не найдена'),
