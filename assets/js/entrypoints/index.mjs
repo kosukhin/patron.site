@@ -15,7 +15,6 @@ import {
     GuestMiddle,
     Patron,
     Source,
-    SourceEmpty,
     give
 } from 'patron-oop';
 import {
@@ -26,22 +25,19 @@ import {
 const pageLoading = new Source(false);
 pageLoading.value(new Patron(new Visible('.loader')));
 
-const pageSource = new SourceEmpty();
 const currentPage = new CurrentPage();
-currentPage.value(new Patron(pageSource));
-pageSource.value(new Patron(new HistoryNewPage()));
+currentPage.value(new Patron(new HistoryNewPage()));
 
-const historyPoppedPage = new HistoryPoppedPage(pageSource);
+const historyPoppedPage = new HistoryPoppedPage(currentPage);
 historyPoppedPage.watchPop();
 
-
 const [basePath] = location.href.replace(location.origin, "").split('#');
-const basePathSource = new Source(`${basePath}#`);
+const basePathSource = new Source(`${basePath}#`.replace('index.html', '').replace('//', '/'));
 
 const navigation = new Navigation(
     pageLoading,
     basePathSource,
-    pageSource,
+    currentPage,
     new RouteDisplay('.page-area'),
     new Factory(PageFetchTransport)
 );
@@ -50,8 +46,8 @@ navigation.routes(
         {
             url: '/',
             template: 'pages/index.html',
+            aliases: [basePath, `${basePath}index.html`, ''],
             page: new Page('Главная страница'),
-            default: true,
         },
         {
             url: '/guest',
@@ -68,6 +64,12 @@ navigation.routes(
             template: 'pages/source.html',
             page: new Page('Источник'),
         },
+        {
+            url: '',
+            template: 'pages/404.html',
+            page: new Page('Страница не найдена'),
+            default: true,
+        },
     ],
 );
 
@@ -76,9 +78,8 @@ link.watchClick('.menu');
 
 const url = new GuestAware((guest) => {
     basePathSource.value(new GuestMiddle(guest, (basePath) => {
-        pageSource.value(new GuestMiddle(guest, (page) => {
-            const url = page.url ?? ''
-            give(url.replace(basePath, ''), guest);
+        currentPage.value(new GuestMiddle(guest, (page) => {
+            give(page.replace(basePath, ''), guest);
         }));
     }));
 });
