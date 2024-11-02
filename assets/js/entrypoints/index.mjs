@@ -2,12 +2,11 @@ import {
     ClassToggle,
     ComputedElement,
     CurrentPage,
-    Page,
     Link,
     Navigation,
+    Page,
     PageFetchTransport,
     RouteDisplay,
-    Text,
     Visible
 } from 'patron-components';
 import {
@@ -25,12 +24,12 @@ import {
 } from 'patron-web-api';
 
 const pageLoading = new Source(false);
-pageLoading.receiving(new Patron(new Visible('.loader')));
+pageLoading.value(new Patron(new Visible('.loader')));
 
 const pageSource = new SourceEmpty();
 const currentPage = new CurrentPage();
-currentPage.receiving(new Patron(pageSource));
-pageSource.receiving(new Patron(new HistoryNewPage()));
+currentPage.value(new Patron(pageSource));
+pageSource.value(new Patron(new HistoryNewPage()));
 
 const historyPoppedPage = new HistoryPoppedPage(pageSource);
 historyPoppedPage.watchPop();
@@ -76,14 +75,13 @@ const link = new Link(currentPage, basePathSource);
 link.watchClick('.menu');
 
 const url = new GuestAware((guest) => {
-    basePathSource.receiving(new GuestMiddle(guest, (basePath) => {
-        pageSource.receiving(new GuestMiddle(guest, (page) => {
+    basePathSource.value(new GuestMiddle(guest, (basePath) => {
+        pageSource.value(new GuestMiddle(guest, (page) => {
             const url = page.url ?? ''
             give(url.replace(basePath, ''), guest);
         }));
     }));
 });
-url.receiving(new Patron(new Text('.current-url')));
 
 const activeLink = new ComputedElement(
     [{ source: url, placeholder: '{url}' }],

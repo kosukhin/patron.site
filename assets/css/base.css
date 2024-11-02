@@ -1,0 +1,8 @@
+.active {
+    background-color: orange;
+}
+
+.menu-link {
+    padding: 2px 6px;
+    color: black;
+}
