@@ -47,7 +47,7 @@ navigation.routes(
             url: '/',
             template: 'pages/index.html',
             aliases: [basePath, `${basePath}index.html`, ''],
-            page: new Page('Главная страница'),
+            page: new Page('Patron OOP'),
         },
         {
             url: '/guest',
@@ -68,6 +68,11 @@ navigation.routes(
             url: '/factory',
             template: 'pages/factory.html',
             page: new Page('Фабрика'),
+        },
+        {
+            url: '/philosofy',
+            template: 'pages/philosofy.html',
+            page: new Page('Философия'),
         },
         {
             url: '',
