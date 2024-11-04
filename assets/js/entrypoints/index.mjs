@@ -52,7 +52,7 @@ navigation.routes(
             page: new Page('Patron OOP'),
         },
         {
-            url: '/guest',
+            url: '/guest*',
             template: 'pages/guest.html',
             page: new EntryPointPage(
                 'Гость',
