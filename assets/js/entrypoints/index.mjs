@@ -5,6 +5,7 @@ import {
     Link,
     Navigation,
     Page,
+    EntryPointPage,
     PageFetchTransport,
     RouteDisplay,
     Visible
@@ -33,6 +34,7 @@ historyPoppedPage.watchPop();
 
 const [basePath] = location.href.replace(location.origin, "").split('#');
 const basePathSource = new Source(`${basePath}#`.replace('index.html', '').replace('//', '/'));
+const [fullPath] = location.href.split('#');
 
 const navigation = new Navigation(
     pageLoading,
@@ -52,7 +54,10 @@ navigation.routes(
         {
             url: '/guest',
             template: 'pages/guest.html',
-            page: new Page('Гость'),
+            page: new EntryPointPage(
+                'Гость',
+                `${fullPath}assets/js/entrypoints/guest.mjs`,
+            ),
         },
         {
             url: '/patron',
