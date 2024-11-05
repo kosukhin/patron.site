@@ -9,7 +9,7 @@
 </a>
 
 <p class="text-gray-600 text-lg mb-4">
-    Класс предназначен для того, чтобы создавать новые экземпляры GuestObjectType из функции-коллбэка.
+    Предназначен для создания новых экземпляров GuestObjectType из функции-колбэка.
 </p>
 
 <p class="text-gray-600 text-lg mb-4">
@@ -18,8 +18,9 @@
 </p>
 
 <p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
-<pre class="mt-0">
-    <code class="language-js">class Timestamp {
+<pre class="mb-4"><code class="language-js">import { Guest } from 'patron-oop';
+
+class Timestamp {
     seconds(guest) {
         guest.give(Date.now())
     }
@@ -29,15 +30,14 @@ const timestamp = new Timestamp();
 timestamp.seconds(new Guest((timestamp) => {
     console.log('timestamp is', timestamp);
 }));
-    </code>
-</pre>
+</code></pre>
 
 <p class="text-gray-600 text-lg mb-0 font-bold">Результат 1.</p>
 <div class="example mb-4">
     <span class="guest-result">Result here</span>
 </div>
 <script type="module">
-    import {Guest} from 'patron-oop';
+    import { Guest } from 'patron-oop';
 
     class Timestamp {
         seconds(guest) {
@@ -47,21 +47,20 @@ timestamp.seconds(new Guest((timestamp) => {
 
     const timestamp = new Timestamp();
     timestamp.seconds(new Guest((timestamp) => {
-        console.log('done', timestamp);
-
         document.querySelector('.guest-result').textContent = `timestamp is ${timestamp}`;
     }));
 </script>
 
 <p class="text-gray-600 text-lg mb-4">
     Важно, что эта возможность создавать объект-посетитель из функции была единственной в первых версиях библиотеки.
-    На текущий момент вы можете также передать функцию-коллбэк в качестве посетителя, тк функция
+    На текущий момент вы можете также передать функцию-колбэк в качестве посетителя, тк функция
     соответствует типу GuestType. Это позволяет не создавать лишних объектных-оберток.
 </p>
 
 <p class="text-gray-600 text-lg font-bold mb-0">Пример 2.</p>
-<pre class="mt-0">
-    <code class="language-js">class Timestamp {
+<pre class="mt-0"><code class="language-js">import { Guest } from 'patron-oop';
+
+class Timestamp {
     seconds(guest) {
         give(Date.now(), guest);
     }
@@ -71,5 +70,4 @@ const timestamp = new Timestamp();
 timestamp.seconds((timestamp) => {
     console.log('timestamp is', timestamp);
 });
-    </code>
-</pre>
+</code></pre>

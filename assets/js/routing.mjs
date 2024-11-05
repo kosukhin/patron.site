@@ -82,14 +82,12 @@ export class EntryPointRouting {
         divDestination
           .querySelectorAll("script")
           .forEach(x => {
-            console.log('script', x);
-
             var sc = document.createElement("script");
             sc.setAttribute('type', 'module');
             sc.appendChild(document.createTextNode(x.innerText));
             divDestination.appendChild(sc)
           })
-      }, 100);
+      }, 300);
     }));
   }
 }

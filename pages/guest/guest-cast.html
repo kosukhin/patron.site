@@ -1,1 +1,128 @@
-<h1>Guest Cast</h1>
+<h1 class="pb-3 text-xl font-semibold text-gray-600">
+    Класс GuestCast
+</h1>
+
+<a href="https://github.com/kosukhin/patron/blob/main/src/Guest/GuestCast.ts" target="_blank"
+    class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 mb-4">
+    <img src="./assets/img/github_16.jpg" width="16" height="16" />
+    GuestCast на GitHub
+</a>
+
+<p class="text-gray-600 text-lg mb-4">
+    Предназначен для наследования представления посетителя (introduction). Принимает 2 аргумента, если первый посетитель
+    является - гостем ('guest' или функция), то результирующий объект возьмет функциональность второго посетителя и
+    будет тоже гостем. Если первый посетитель является патроном, то результирующий объект возьмет функциональность
+    второго посетителя, но будет так же патроном как и первый посетитель.
+</p>
+
+
+<p class="text-gray-600 text-lg mb-4">
+    Это наследование полезно в случаях, когда нужно имея оригинальный посетитель, приходящий в метод,
+    наследовать его поведение для уже существующих посетителей, созданных по внутренней логике.
+</p>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
+<pre class="mb-4"><code class="language-js">import {
+    give,
+    Patron,
+    GuestCast
+} from 'patron-oop';
+
+class NumberOnceATime {
+    constructor(number, delay) {
+        this.delay = delay;
+        this.theNumber = number;
+    }
+
+    number(guest) {
+        const repeat = () => {
+            setTimeout(() => {
+                give(this.theNumber, guest);
+                repeat();
+            }, this.delay)
+        }
+        repeat();
+    }
+}
+
+class TotalSum {
+    constructor(numbers) {
+        this.numbers = numbers;
+    }
+
+    sum(guest) {
+        let totalSum = 0;
+        this.numbers.forEach((numberSource, index) => {
+            numberSource.number(new GuestCast(guest, (value) => {
+                totalSum += value;
+                give(totalSum, guest);
+            }));
+        });
+    }
+}
+
+new TotalSum([
+    new NumberOnceATime(1, 1000),
+    new NumberOnceATime(10, 5000),
+    new NumberOnceATime(100, 10000)
+])
+    .sum(new Patron((value) => {
+        document.querySelector('.guest-result').textContent = `Результат = ${value}`;
+    }));
+</code></pre>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Результат 1.</p>
+<div class="example mb-4">
+    <span class="guest-cast-result">Результат = 0</span>
+</div>
+<script type="module">
+    import { give, Patron, GuestCast, removePatronFromPools } from 'patron-oop';
+
+    class NumberOnceATime {
+        constructor(number, delay) {
+            this.delay = delay;
+            this.theNumber = number;
+        }
+
+        number(guest) {
+            const repeat = () => {
+                setTimeout(() => {
+                    give(this.theNumber, guest);
+                    repeat();
+                }, this.delay)
+            }
+            repeat();
+        }
+    }
+
+    class TotalSum {
+        constructor(numbers) {
+            this.numbers = numbers;
+        }
+
+        sum(guest) {
+            let totalSum = 0;
+            this.numbers.forEach((numberSource, index) => {
+                numberSource.number(new GuestCast(guest, (value) => {
+                    totalSum += value;
+                    give(totalSum, guest);
+                }));
+            });
+        }
+    }
+
+    const renderResult = new Patron((value) => {
+        const resultEl = document.querySelector('.guest-cast-result');
+        if (resultEl) {
+            resultEl.textContent = `Результат = ${value}`;
+        } else {
+            removePatronFromPools(renderResult);
+        }
+    });
+    new TotalSum([
+        new NumberOnceATime(1, 1000),
+        new NumberOnceATime(10, 5000),
+        new NumberOnceATime(100, 10000)
+    ])
+        .sum(renderResult);
+</script>

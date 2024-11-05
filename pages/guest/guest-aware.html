@@ -1,1 +1,48 @@
-<h1>Guest Aware</h1>
+<h1 class="pb-3 text-xl font-semibold text-gray-600">
+    Класс GuestAware
+</h1>
+
+<a href="https://github.com/kosukhin/patron/blob/main/src/Guest/GuestAware.ts" target="_blank"
+    class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 mb-4">
+    <img src="./assets/img/github_16.jpg" width="16" height="16" />
+    GuestAware на GitHub
+</a>
+
+<p class="text-gray-600 text-lg mb-4">
+    Предназначен для создания объектов, которые будут источниками данных, логика этих объектов
+    основана на переданной функции-колбэке.
+</p>
+
+<p class="text-gray-600 text-lg mb-4">
+    Полезно в случаях, когда нужно создать новый объект с уникальным поведением по генерации данных
+    без создания для этого отдельного класса.
+</p>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
+<pre class="mb-4"><code class="language-js">import {
+    GuestAware,
+    give
+} from 'patron-oop';
+
+const timestamp = new GuestAware((guest) => {
+    give(Date.now(), guest);
+});
+timestamp.value((timestamp) => {
+    console.log('timestamp is', timestamp);
+});
+</code></pre>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Результат 1.</p>
+<div class="example mb-4">
+    <span class="guest-result">Result here</span>
+</div>
+<script type="module">
+    import { GuestAware, give } from 'patron-oop';
+
+    const timestamp = new GuestAware((guest) => {
+        give(Date.now(), guest);
+    });
+    timestamp.value((timestamp) => {
+        document.querySelector('.guest-result').textContent = `timestamp is ${timestamp}`;
+    });
+</script>
