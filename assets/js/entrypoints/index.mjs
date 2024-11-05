@@ -23,7 +23,7 @@ routing.routes([
     url: "/guest*",
     template: "pages/guest.html",
     page: new EntryPointPage(
-      "Гость",
+      "Класс Guest",
       `${fullPath}assets/js/entrypoints/guest.mjs`
     ),
   },

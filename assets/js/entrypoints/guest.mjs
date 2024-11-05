@@ -12,7 +12,7 @@ const main = () => {
     {
       url: "/guest",
       template: "pages/guest/index.html",
-      page: new Page("Гость"),
+      page: new Page("Класс Guest"),
     },
     {
       url: "/guest/guest-aware",
