@@ -72,22 +72,24 @@ export class EntryPointRouting {
       new Patron(new ClassToggle("active", `${this.menuSelector} a`))
     );
 
-    url.value(new Patron(() => {
-      setTimeout(() => {
-        hljs.highlightAll();
-        hljs.initLineNumbersOnLoad();
+    pageLoading.value(new Patron((isInLoading) => {
+      if (isInLoading) {
+        return;
+      }
 
-        const divDestination = document.querySelector(this.navigationResultSelector);
-        // Оживляем script тэги
-        divDestination
-          .querySelectorAll("script")
-          .forEach(x => {
-            var sc = document.createElement("script");
-            sc.setAttribute('type', 'module');
-            sc.appendChild(document.createTextNode(x.innerText));
-            divDestination.appendChild(sc)
-          })
-      }, 300);
+      hljs.highlightAll();
+      hljs.initLineNumbersOnLoad();
+
+      const divDestination = document.querySelector(this.navigationResultSelector);
+      // Оживляем script тэги
+      divDestination
+        .querySelectorAll("script")
+        .forEach(x => {
+          var sc = document.createElement("script");
+          sc.setAttribute('type', 'module');
+          sc.appendChild(document.createTextNode(x.innerText));
+          divDestination.appendChild(sc)
+        })
     }));
   }
 }
