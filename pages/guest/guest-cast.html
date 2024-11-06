@@ -76,7 +76,7 @@ new TotalSum([
     <span class="guest-cast-result">Результат = 0</span>
 </div>
 <script type="module">
-    import { give, Patron, GuestCast, removePatronFromPools } from 'patron-oop';
+    import { give, Patron, Source, GuestCast, removePatronFromPools, isPatronInPools } from 'patron-oop';
 
     class NumberOnceATime {
         constructor(number, delay) {
@@ -85,9 +85,15 @@ new TotalSum([
         }
 
         number(guest) {
+            const source =  new Source(this.theNumber);
+            source.value(guest);
             const repeat = () => {
+                if (!isPatronInPools(guest)) {
+                    return;
+                }
+
                 setTimeout(() => {
-                    give(this.theNumber, guest);
+                    source.give(this.theNumber);
                     repeat();
                 }, this.delay)
             }
@@ -102,24 +108,33 @@ new TotalSum([
 
         sum(guest) {
             let totalSum = 0;
+            const source = new Source(totalSum);
+            source.value(guest);
+            const numbersGuests = [];
             this.numbers.forEach((numberSource, index) => {
-                numberSource.number(new GuestCast(guest, (value) => {
+                const numberGuest = new GuestCast(guest, (value) => {
                     totalSum += value;
-                    give(totalSum, guest);
-                }));
+                    source.give(totalSum);
+                });
+                numberSource.number(numberGuest);
+                numbersGuests.push(numberGuest);
             });
+
+            return numbersGuests;
         }
     }
 
+    let totalSumGuests = []
     const renderResult = new Patron((value) => {
         const resultEl = document.querySelector('.guest-cast-result');
         if (resultEl) {
             resultEl.textContent = `Результат = ${value}`;
         } else {
             removePatronFromPools(renderResult);
+            totalSumGuests.forEach(removePatronFromPools);
         }
-    });
-    new TotalSum([
+    }, 'renderResult');
+    totalSumGuests = new TotalSum([
         new NumberOnceATime(1, 1000),
         new NumberOnceATime(10, 5000),
         new NumberOnceATime(100, 10000)
