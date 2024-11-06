@@ -8,8 +8,12 @@ html, body {
 }
 
 .example {
-    border: solid 2px #ccc;
+    border: solid 2px #333;
     padding: 15px;
+    color: #abb2bf;
+    background: #282c34;
+    font-family: monospace;
+    font-size: 16px;
 }
 
 .hljs-ln-numbers.hljs-ln-numbers {

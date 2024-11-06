@@ -21,9 +21,8 @@
     Этот класс может быть заменен функцией give, которой не важно какой посетитель к ней пришел функция, гость или патрон.
 </p>
 
-
 <p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
-<pre class="mb-4"><code class="language-js">import { GuestObject, Source } from 'patron-oop';
+<pre class="mb-4"><code class="language-js">import { GuestObject } from 'patron-oop';
 
 class HelloWorld {
     greeting(guest) {
@@ -42,7 +41,7 @@ new HelloWorld().greeting(fnGuest);
     <span class="guest-result">Ждем результат</span>
 </div>
 <script type="module">
-    import { GuestObject, Source } from 'patron-oop';
+    import { GuestObject } from 'patron-oop';
 
     class HelloWorld {
         greeting(guest) {

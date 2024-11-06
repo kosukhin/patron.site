@@ -1,1 +1,71 @@
-<h1>Guest Pool</h1>
+<h1 class="pb-3 text-xl font-semibold text-gray-600">
+    Класс GuestPool
+</h1>
+
+<a href="https://github.com/kosukhin/patron/blob/main/src/Guest/GuestPool.ts" target="_blank"
+    class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 mb-4">
+    <img src="./assets/img/github_16.jpg" width="16" height="16" />
+    GuestPool на GitHub
+</a>
+
+<p class="text-gray-600 text-lg mb-4">
+    Предназначен для подписки на отложенное значение не только патрона но и гостя
+</p>
+
+<p class="text-gray-600 text-lg mb-4">
+    Полезным это поведение может быть в случаях, когда значение заранее не известно, но пришедший посетитель в случае
+    если он гость не должен быть проигнорирован, а должен получить первое установленное значение, после чего
+    все гости из пула удаляются, а все патроны остаются внутри PatronPool.
+</p>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
+<pre class="mb-4"><code class="language-js">import { GuestPool } from 'patron-oop';
+
+class ValueAfterDelay {
+    constructor(theValue, delay) {
+        this.theValue = theValue;
+        this.delay = delay;
+        this.pool = new GuestPool();
+    }
+
+    value(guest) {
+        this.pool.add(guest);
+        setTimeout(() => {
+            this.pool.give(this.theValue);
+        }, this.delay);
+    }
+}
+
+const fnGuest = (value) => {
+    document.querySelector('.guest-result').textContent = value;
+}
+new ValueAfterDelay(42, 5000).value(fnGuest);
+</code></pre>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Результат 1.</p>
+<div class="example mb-4">
+    <span class="guest-result">Ждем значение через 5 секунд...</span>
+</div>
+<script type="module">
+    import { GuestPool } from 'patron-oop';
+
+    class ValueAfterDelay {
+        constructor(theValue, delay) {
+            this.theValue = theValue;
+            this.delay = delay;
+            this.pool = new GuestPool();
+        }
+
+        value(guest) {
+            this.pool.add(guest);
+            setTimeout(() => {
+                this.pool.give(this.theValue);
+            }, this.delay);
+        }
+    }
+
+    const fnGuest = (value) => {
+        document.querySelector('.guest-result').textContent = value;
+    }
+    new ValueAfterDelay(42, 5000).value(fnGuest);
+</script>
