@@ -30,11 +30,6 @@ const main = () => {
       page: new Page("GuestChain"),
     },
     {
-      url: "/guest/guest-middle",
-      template: "pages/guest/guest-middle.html",
-      page: new Page("GuestMiddle"),
-    },
-    {
       url: "/guest/guest-object",
       template: "pages/guest/guest-object.html",
       page: new Page("GuestObject"),
