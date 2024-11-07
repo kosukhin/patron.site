@@ -9,10 +9,90 @@
 </a>
 
 <p class="text-gray-600 text-lg mb-4">
-    Предназначен для создания новых экземпляров GuestObjectType из функции-колбэка.
+    Предназначен для превращения на лету гостя в патрона
 </p>
 
 <p class="text-gray-600 text-lg mb-4">
-    Это поведение полезно в случаях, когда нужно динамически построить посетителя на основе функции, используя какие-то
-    переменные из скоупа, где создана функция.
+    Это поведение полезно в случаях, когда нужно из просто посетителя(гостя)
+    сделать постоянного посетиеля(патрона). Это будет означать что
+    если у источника данных есть новые данные, то источник отдаст
+    эту новую порцию данных всем своим постоянным посетителям(патронам).
 </p>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
+<pre class="mb-4"><code class="language-js">import {
+    Patron,
+    GuestAware,
+    Source,
+    isPatronInPools,
+    removePatronFromPools
+} from 'patron-oop';
+
+const source = new Source(1);
+const timer = new GuestAware((guest) => {
+    source.value(guest);
+    const repeat = () => {
+        if (!isPatronInPools(guest)) {
+            return;
+        }
+        source.value((value) => {
+            setTimeout(() => {
+                source.give(value + 1);
+                repeat();
+            }, 1000);
+        });
+    }
+    repeat();
+})
+
+const timerGuest = new Patron((value) => {
+    const el = document.querySelector('.guest-result');
+    if (el) {
+        el.textContent = `Секунд прошло ${value}`;
+    } else {
+        removePatronFromPools(timerGuest);
+    }
+});
+timer.value(timerGuest);
+</code></pre>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Результат 1.</p>
+<div class="example mb-4">
+    <span class="patron-result">Result here</span>
+</div>
+<script type="module">
+    import {
+        Patron,
+        GuestAware,
+        Source,
+        isPatronInPools,
+        removePatronFromPools
+    } from 'patron-oop';
+
+    const source = new Source(1);
+    const timer = new GuestAware((guest) => {
+        source.value(guest);
+        const repeat = () => {
+            if (!isPatronInPools(guest)) {
+                return;
+            }
+            source.value((value) => {
+                setTimeout(() => {
+                    source.give(value + 1);
+                    repeat();
+                }, 1000);
+            });
+        }
+        repeat();
+    })
+
+    const timerGuest = new Patron((value) => {
+        const el = document.querySelector('.patron-result');
+        if (el) {
+            el.textContent = `Секунд прошло ${value}`;
+        } else {
+            removePatronFromPools(timerGuest);
+        }
+    });
+    timer.value(timerGuest);
+</script>
