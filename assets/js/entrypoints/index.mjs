@@ -44,9 +44,12 @@ routing.routes([
     ),
   },
   {
-    url: "/factory",
+    url: "/factory*",
     template: "pages/factory.html",
-    page: new Page("Фабрика"),
+    page: new EntryPointPage(
+      "Фабрика",
+      `${fullPath}assets/js/entrypoints/factory.mjs`
+    ),
   },
   {
     url: "/philosofy",
