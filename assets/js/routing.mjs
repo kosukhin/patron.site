@@ -12,7 +12,7 @@ import {
   Factory,
   GuestAware,
   GuestChain,
-  GuestMiddle,
+  GuestCast,
   Patron,
   Source,
   give,
@@ -58,7 +58,7 @@ export class EntryPointRouting {
     currentPage.value(new Patron(urlChain.receiveKey("page")));
     const url = new GuestAware((guest) => {
       urlChain.result(
-        new GuestMiddle(guest, ({ basePath, page }) => {
+        new GuestCast(guest, ({ basePath, page }) => {
           give(page.replace(basePath, ""), guest);
         })
       );

@@ -23,9 +23,9 @@
 <pre class="mb-4"><code class="language-js">import {
     Patron,
     GuestAware,
+    GuestDisposable,
     Source,
-    isPatronInPools,
-    removePatronFromPools
+    isPatronInPools
 } from 'patron-oop';
 
 const source = new Source(1);
@@ -45,15 +45,16 @@ const timer = new GuestAware((guest) => {
     repeat();
 })
 
-const timerGuest = new Patron((value) => {
-    const el = document.querySelector('.guest-result');
-    if (el) {
-        el.textContent = `Секунд прошло ${value}`;
-    } else {
-        removePatronFromPools(timerGuest);
-    }
-});
-timer.value(timerGuest);
+timer.value(new Patron(
+    new GuestDisposable((value) => {
+        const el = document.querySelector('.patron-result');
+        if (el) {
+            el.textContent = `Секунд прошло ${value}`;
+        }
+    }, () => {
+        return !document.querySelector('.patron-result');
+    }))
+);
 </code></pre>
 
 <p class="text-gray-600 text-lg mb-0 font-bold">Результат 1.</p>
@@ -64,9 +65,9 @@ timer.value(timerGuest);
     import {
         Patron,
         GuestAware,
+        GuestDisposable,
         Source,
-        isPatronInPools,
-        removePatronFromPools
+        isPatronInPools
     } from 'patron-oop';
 
     const source = new Source(1);
@@ -86,13 +87,14 @@ timer.value(timerGuest);
         repeat();
     })
 
-    const timerGuest = new Patron((value) => {
-        const el = document.querySelector('.patron-result');
-        if (el) {
-            el.textContent = `Секунд прошло ${value}`;
-        } else {
-            removePatronFromPools(timerGuest);
-        }
-    });
-    timer.value(timerGuest);
+    timer.value(new Patron(
+        new GuestDisposable((value) => {
+            const el = document.querySelector('.patron-result');
+            if (el) {
+                el.textContent = `Секунд прошло ${value}`;
+            }
+        }, () => {
+            return !document.querySelector('.patron-result');
+        }))
+    );
 </script>
