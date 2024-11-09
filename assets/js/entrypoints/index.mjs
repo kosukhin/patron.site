@@ -1,8 +1,13 @@
 import {
     EntryPointPage,
-    Page
+    CurrentPage,
+    Page,
+    Link
 } from "patron-components";
 import { EntryPointRouting } from "../routing.mjs";
+import {
+  Source,
+} from "patron-oop";
 
 const routing = new EntryPointRouting(
     ".loader",
@@ -12,6 +17,14 @@ const routing = new EntryPointRouting(
 
 const [basePath] = location.href.replace(location.origin, "").split("#");
 const [fullPath] = location.href.split("#");
+const currentPage = new CurrentPage();
+const basePathSource = new Source(
+  `${basePath}#`.replace("index.html", "").replace("//", "/")
+);
+
+const link = new Link(currentPage, basePathSource);
+link.watchClick('.global-body', '.dynamic-navigation > a');
+
 routing.routes([
   {
     url: "/",
@@ -62,4 +75,4 @@ routing.routes([
     page: new Page("Страница не найдена"),
     default: true,
   },
-]);
+], currentPage, basePathSource);

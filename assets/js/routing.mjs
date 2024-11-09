@@ -26,20 +26,28 @@ export class EntryPointRouting {
     this.menuSelector = menuSelector;
   }
 
-  routes(routes) {
+  routes(
+    routes,
+    currentPage,
+    basePathSource
+  ) {
+    if (!currentPage) {
+      currentPage = new CurrentPage();
+    }
+    currentPage.value(new Patron(new HistoryNewPage()));
+
+    const [basePath] = location.href.replace(location.origin, "").split("#");
+    if (!basePathSource) {
+      basePathSource = new Source(
+        `${basePath}#`.replace("index.html", "").replace("//", "/")
+      );
+    }
+
     const pageLoading = new Source(false);
     pageLoading.value(new Patron(new Visible(this.loaderSelector)));
 
-    const currentPage = new CurrentPage();
-    currentPage.value(new Patron(new HistoryNewPage()));
-
     const historyPoppedPage = new HistoryPoppedPage(currentPage);
     historyPoppedPage.watchPop();
-
-    const [basePath] = location.href.replace(location.origin, "").split("#");
-    const basePathSource = new Source(
-      `${basePath}#`.replace("index.html", "").replace("//", "/")
-    );
 
     const navigation = new Navigation(
       pageLoading,
