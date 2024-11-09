@@ -89,15 +89,17 @@ export class EntryPointRouting {
       hljs.initLineNumbersOnLoad();
 
       const divDestination = document.querySelector(this.navigationResultSelector);
-      // Оживляем script тэги
-      divDestination
-        .querySelectorAll("script")
-        .forEach(x => {
-          var sc = document.createElement("script");
-          sc.setAttribute('type', 'module');
-          sc.appendChild(document.createTextNode(x.innerText));
-          divDestination.appendChild(sc)
-        })
+      if (divDestination) {
+        // Оживляем script тэги
+        divDestination
+          .querySelectorAll("script")
+          .forEach(x => {
+            var sc = document.createElement("script");
+            sc.setAttribute('type', 'module');
+            sc.appendChild(document.createTextNode(x.innerText));
+            divDestination.appendChild(sc)
+          });
+      }
     }));
   }
 }
