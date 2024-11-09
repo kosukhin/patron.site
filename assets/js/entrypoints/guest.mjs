@@ -45,6 +45,11 @@ const main = () => {
       page: new Page("GuestSync"),
     },
     {
+      url: "/guest/guest-disposable",
+      template: "pages/guest/guest-disposable.html",
+      page: new Page("GuestDisposable"),
+    },
+    {
       url: "",
       template: "pages/404.html",
       page: new Page("Страница не найдена"),
