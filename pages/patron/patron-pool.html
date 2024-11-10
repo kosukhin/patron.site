@@ -9,10 +9,61 @@
 </a>
 
 <p class="text-gray-600 text-lg mb-4">
-    Предназначен для создания новых экземпляров GuestObjectType из функции-колбэка.
+    Предназначен для хранения списка патронов, которым нужно передавать
+    значения.
 </p>
 
 <p class="text-gray-600 text-lg mb-4">
-    Это поведение полезно в случаях, когда нужно динамически построить посетителя на основе функции, используя какие-то
-    переменные из скоупа, где создана функция.
+    Полезно для организации списка подписчиков на обновление данных
+    какого-то источника. Сам по себе класс PatronPool - достаочно низкоуровневый
+    и желательно исопльзовать класс Source, который именно является источником
+    значений (у Source под капотом работает PatornPool).
+</p>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
+<pre class="mb-4"><code class="language-js">import {
+    PatronPool,
+    Patron
+} from 'patron-oop';
+
+const pool = new PatronPool();
+
+pool.add(new Patron((value) => {
+    document.querySelector('.patron-pool-result1').textContent = value + ' 1';
+}));
+pool.add(new Patron((value) => {
+    document.querySelector('.patron-pool-result2').textContent = value + ' 2';
+}));
+
+pool.give('Значение из пула');
+</code></pre>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Результат 1.</p>
+<div class="example mb-4">
+    <div class="patron-pool-result1">Нет результата 1!</div>
+    <div class="patron-pool-result2">Нет результата 2!</div>
+</div>
+<script type="module">
+    import {
+        PatronPool,
+        Patron
+    } from 'patron-oop';
+
+    const pool = new PatronPool();
+
+    pool.add(new Patron((value) => {
+        document.querySelector('.patron-pool-result1').textContent = value + ' 1';
+    }));
+    pool.add(new Patron((value) => {
+        document.querySelector('.patron-pool-result2').textContent = value + ' 2';
+    }));
+
+    pool.give('Значение из пула');
+</script>
+
+<div class="font-bold mt-8">Смотрите также</div>
+
+<p class="text-gray-600 text-lg mb-4 dynamic-navigation">
+    <a class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white bg-slate-900" href="/source">Source</a>
+    <a class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white bg-slate-900" href="/patron">Patron</a>
 </p>
