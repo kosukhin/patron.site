@@ -65,6 +65,38 @@ routing.routes([
     ),
   },
   {
+    url: "/compatibility*",
+    template: "pages/compatibility/layout.html",
+    page: new EntryPointPage(
+      "",
+      `${fullPath}assets/js/entrypoints/compatibility.mjs`
+    ),
+  },
+  {
+    url: "/integrations*",
+    template: "pages/integrations/layout.html",
+    page: new EntryPointPage(
+      "",
+      `${fullPath}assets/js/entrypoints/integrations.mjs`
+    ),
+  },
+  {
+    url: "/utils*",
+    template: "pages/utils/index.html",
+    page: new EntryPointPage(
+      "",
+      `${fullPath}assets/js/entrypoints/utils.mjs`
+    ),
+  },
+  {
+    url: "/terminology*",
+    template: "pages/terminology/index.html",
+    page: new EntryPointPage(
+      "",
+      `${fullPath}assets/js/entrypoints/terminology.mjs`
+    ),
+  },
+  {
     url: "/philosofy",
     template: "pages/philosofy.html",
     page: new Page("Философия"),
