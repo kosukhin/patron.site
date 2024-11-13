@@ -82,7 +82,7 @@ routing.routes([
   },
   {
     url: "/utils*",
-    template: "pages/common/layout.html",
+    template: "pages/utils.html",
     page: new EntryPointPage(
       "",
       `${fullPath}assets/js/entrypoints/utils.mjs`
@@ -90,7 +90,7 @@ routing.routes([
   },
   {
     url: "/terminology*",
-    template: "pages/common/layout.html",
+    template: "pages/terminology.html",
     page: new EntryPointPage(
       "",
       `${fullPath}assets/js/entrypoints/terminology.mjs`

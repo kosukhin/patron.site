@@ -3,9 +3,9 @@ import { EntryPointRouting } from "../routing.mjs";
 
 const main = () => {
   const routing = new EntryPointRouting(
-    ".common-loader",
-    ".common-page-area",
-    ".common-menu"
+    ".terminology-loader",
+    ".terminology-page-area",
+    ".terminology-menu"
   );
 
   routing.routes([
