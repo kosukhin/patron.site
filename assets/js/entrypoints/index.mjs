@@ -1,8 +1,8 @@
 import {
-    EntryPointPage,
-    CurrentPage,
-    Page,
-    Link
+  EntryPointPage,
+  CurrentPage,
+  Page,
+  Link
 } from "patron-components";
 import { EntryPointRouting } from "../routing.mjs";
 import {
@@ -10,9 +10,9 @@ import {
 } from "patron-oop";
 
 const routing = new EntryPointRouting(
-    ".loader",
-    ".page-area",
-    ".menu"
+  ".loader",
+  ".page-area",
+  ".menu"
 );
 
 const [basePath] = location.href.replace(location.origin, "").split("#");
@@ -82,7 +82,7 @@ routing.routes([
   },
   {
     url: "/utils*",
-    template: "pages/utils/index.html",
+    template: "pages/common/layout.html",
     page: new EntryPointPage(
       "",
       `${fullPath}assets/js/entrypoints/utils.mjs`
@@ -90,7 +90,7 @@ routing.routes([
   },
   {
     url: "/terminology*",
-    template: "pages/terminology/index.html",
+    template: "pages/common/layout.html",
     page: new EntryPointPage(
       "",
       `${fullPath}assets/js/entrypoints/terminology.mjs`

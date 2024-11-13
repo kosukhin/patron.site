@@ -3,16 +3,36 @@ import { EntryPointRouting } from "../routing.mjs";
 
 const main = () => {
   const routing = new EntryPointRouting(
-    ".utils-loader",
-    ".utils-page-area",
-    ".utils-menu"
+    ".common-loader",
+    ".common-page-area",
+    ".common-menu"
   );
 
   routing.routes([
     {
-      url: "/utils/",
+      url: "/utils",
       template: "pages/utils/index.html",
-      page: new Page("Elegant Objects"),
+      page: new Page("Утилиты"),
+    },
+    {
+      url: "/utils/give",
+      template: "pages/utils/give.html",
+      page: new Page("give функция"),
+    },
+    {
+      url: "/utils/factory",
+      template: "pages/utils/factory.html",
+      page: new Page("Factory"),
+    },
+    {
+      url: "/utils/is-patron-in-pools",
+      template: "pages/utils/is-patron-in-pools.html",
+      page: new Page("isPatronInPools"),
+    },
+    {
+      url: "/utils/remove-patron-from-pools",
+      template: "pages/utils/remove-patron-from-pools.html",
+      page: new Page("removePatronFromPools"),
     },
     {
       url: "",
