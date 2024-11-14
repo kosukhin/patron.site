@@ -15,19 +15,29 @@ const main = () => {
       page: new Page("Терминология"),
     },
     {
-      url: "/terminology/guest",
+      url: "/terminology/introduction",
+      template: "pages/terminology/introduction.html",
+      page: new Page("Представление"),
+    },
+    {
+      url: "/terminology/visitor",
+      template: "pages/terminology/visitor.html",
+      page: new Page("Представление"),
+    },
+    {
+      url: "/terminology/the-guest",
       template: "pages/terminology/guest.html",
       page: new Page("Гость"),
     },
     {
-      url: "/terminology/patron",
+      url: "/terminology/the-patron",
       template: "pages/terminology/patron.html",
       page: new Page("Патрон"),
     },
     {
-      url: "/terminology/introduction",
-      template: "pages/terminology/introduction.html",
-      page: new Page("Представление"),
+      url: "/terminology/the-source",
+      template: "pages/terminology/source.html",
+      page: new Page("Источник данных"),
     },
     {
       url: "",
