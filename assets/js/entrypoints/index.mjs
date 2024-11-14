@@ -57,14 +57,6 @@ routing.routes([
     ),
   },
   {
-    url: "/factory*",
-    template: "pages/factory.html",
-    page: new EntryPointPage(
-      "Фабрика",
-      `${fullPath}assets/js/entrypoints/factory.mjs`
-    ),
-  },
-  {
     url: "/compatibility*",
     template: "pages/compatibility/layout.html",
     page: new EntryPointPage(
