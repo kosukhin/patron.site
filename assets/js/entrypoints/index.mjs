@@ -89,6 +89,14 @@ routing.routes([
     ),
   },
   {
+    url: "/examples*",
+    template: "pages/examples.html",
+    page: new EntryPointPage(
+      "",
+      `${fullPath}assets/js/entrypoints/examples.mjs`
+    ),
+  },
+  {
     url: "/philosofy",
     template: "pages/philosofy.html",
     page: new Page("Философия"),

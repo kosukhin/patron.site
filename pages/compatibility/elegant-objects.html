@@ -25,3 +25,219 @@
     Elegant Objects
   </a>
 </p>
+
+<p class="text-gray-600 text-lg mb-4">
+  Без бесплатных
+  <a
+    class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white bg-slate-900"
+    href="https://www.youtube.com/c/yegor256?reload=9&sub_confirmation=1"
+    target="_blank"
+  >
+    видео
+  </a>
+  от Егора и без его блога эта работа или была бы не возможной или появилась бы
+  лет на 5 позже.
+</p>
+
+<p class="text-gray-600 text-lg mb-4">
+  Также хочется отметить книгу
+  <a
+    class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white bg-slate-900"
+    href="https://www.amazon.com/Object-Thinking-Developer-Reference-David/dp/0735619654"
+    target="_blank"
+  >
+    Object Thinking
+  </a>
+  , которая в не меньшей степени вдохновила на создание библиотеки и на
+  переосмысление своей работы при разработке ООП программ.
+</p>
+
+<div class="clear-both"></div>
+
+<p class="text-gray-600 text-lg mb-4">
+  В этом разделе сделаем пример кода на основе декораторов, похожий на советы из
+  книги ElegantObjects, но привяжем к логике, которую опишем еще и в интерфейсе
+</p>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">
+  Результат 1. Вычисление на лету
+</p>
+<div class="example mb-4">
+  <span class="guest-result">
+    (
+    <input
+      type="number"
+      class="input-1"
+      style="
+        width: 60px;
+        background: rgba(255, 255, 255, 0.3);
+        border: solid 1px #eee;
+        color: #000;
+      "
+    />
+    +
+    <span class="eo-counter">?</span>
+    ) *
+    <input
+      type="number"
+      class="input-2"
+      style="
+        width: 60px;
+        background: rgba(255, 255, 255, 0.3);
+        border: solid 1px #eee;
+        color: #000;
+      "
+    />
+    = <span class="eo-result">??</span>
+  </span>
+  <div class="mt-4">
+    <button
+      onclick="window.numberTimer.stop()"
+      class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-black mt-4 md:mt-0"
+    >
+      Остановить
+    </button>
+    <button
+      onclick="window.numberTimer.start()"
+      class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-black mt-4 md:mt-0"
+    >
+      Запустить
+    </button>
+    <button
+      onclick="window.numberTimer.reset()"
+      class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-black mt-4 md:mt-0"
+    >
+      Сбросить
+    </button>
+  </div>
+</div>
+
+<script type="module">
+  import {
+    Guest,
+    Source,
+    Patron,
+    GuestChain,
+    GuestCast,
+    GuestDisposable,
+  } from "patron-oop";
+  import { Text, Input } from "patron-components";
+
+  class NumberFromTimer {
+    timerHead = null;
+
+    constructor() {
+      this.source = new Source(1);
+    }
+
+    number(guest) {
+      this.source.value(guest);
+    }
+
+    start() {
+      if (this.timerHead) {
+        return;
+      }
+      const repeat = () => {
+        this.source.value((value) => {
+          this.timerHead = setTimeout(() => {
+            this.source.give(value + 1);
+            repeat();
+            console.log(this.source.pool().size());
+            if (!this.source.pool().size()) {
+              this.stop();
+            }
+          }, 1000);
+        });
+      };
+      repeat();
+    }
+
+    stop() {
+      clearTimeout(this.timerHead);
+      this.timerHead = null;
+    }
+
+    reset() {
+      this.stop();
+      this.source.give(1);
+      this.start();
+    }
+  }
+
+  class NumberFromInput {
+    constructor(selector) {
+      this.source = new Source(1);
+      this.input = new Input(this.source, selector);
+    }
+
+    number(guest) {
+      this.source.value(
+        new GuestCast(guest, (value) => {
+          guest.give(+value);
+        })
+      );
+    }
+  }
+
+  class Addition {
+    constructor(num1, num2) {
+      this.num1 = num1;
+      this.num2 = num2;
+    }
+
+    number(guest) {
+      const chain = new GuestChain();
+      this.num1.number(new GuestCast(guest, chain.receiveKey("n1")));
+      this.num2.number(new GuestCast(guest, chain.receiveKey("n2")));
+      chain.result(
+        new GuestCast(guest, ({ n1, n2 }) => {
+          guest.give(n1 + n2);
+        })
+      );
+    }
+  }
+
+  class Multiplication {
+    constructor(num1, num2) {
+      this.num1 = num1;
+      this.num2 = num2;
+    }
+
+    number(guest) {
+      const chain = new GuestChain();
+      this.num1.number(new GuestCast(guest, chain.receiveKey("n1")));
+      this.num2.number(new GuestCast(guest, chain.receiveKey("n2")));
+      chain.result(
+        new GuestCast(guest, ({ n1, n2 }) => {
+          guest.give(n1 * n2);
+        })
+      );
+    }
+  }
+
+  window.numberTimer = new NumberFromTimer();
+  numberTimer.start();
+  numberTimer.number(
+    new Patron(
+      new GuestDisposable(
+        new Text(".eo-counter"),
+        () => !document.querySelector(".eo-counter")
+      )
+    )
+  );
+  const numberInput1 = new NumberFromInput(".input-1");
+  const numberInput2 = new NumberFromInput(".input-2");
+  const result = new Multiplication(
+    new Addition(numberInput1, numberTimer),
+    numberInput2
+  );
+  result.number(
+    new Patron(
+      new GuestDisposable(
+        new Text(".eo-result"),
+        () => !document.querySelector(".eo-result")
+      )
+    )
+  );
+</script>
