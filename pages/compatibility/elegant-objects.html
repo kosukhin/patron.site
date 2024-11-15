@@ -56,7 +56,8 @@
 
 <p class="text-gray-600 text-lg mb-4">
   В этом разделе сделаем пример кода на основе декораторов, похожий на советы из
-  книги ElegantObjects, но привяжем к логике, которую опишем еще и в интерфейсе
+  книги ElegantObjects, но дополнительно привяжем к логике интерфейс для
+  управления.
 </p>
 
 <p class="text-gray-600 text-lg mb-0 font-bold">
@@ -93,13 +94,13 @@
   <div class="mt-4">
     <button
       onclick="window.numberTimer.stop()"
-      class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-black mt-4 md:mt-0"
+      class="stop inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-black mt-4 md:mt-0"
     >
       Остановить
     </button>
     <button
       onclick="window.numberTimer.start()"
-      class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-black mt-4 md:mt-0"
+      class="begin inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-black mt-4 md:mt-0"
     >
       Запустить
     </button>
@@ -128,6 +129,7 @@
 
     constructor() {
       this.source = new Source(1);
+      this.isStoppedSource = new Source(false);
     }
 
     number(guest) {
@@ -135,6 +137,7 @@
     }
 
     start() {
+      this.isStoppedSource.give(false);
       if (this.timerHead) {
         return;
       }
@@ -143,7 +146,6 @@
           this.timerHead = setTimeout(() => {
             this.source.give(value + 1);
             repeat();
-            console.log(this.source.pool().size());
             if (!this.source.pool().size()) {
               this.stop();
             }
@@ -154,6 +156,7 @@
     }
 
     stop() {
+      this.isStoppedSource.give(true);
       clearTimeout(this.timerHead);
       this.timerHead = null;
     }
@@ -162,6 +165,10 @@
       this.stop();
       this.source.give(1);
       this.start();
+    }
+
+    isStopped(guest) {
+      this.isStoppedSource.value(guest);
     }
   }
 
@@ -216,28 +223,175 @@
     }
   }
 
+  const disposeIfNoSelector = (selector) => () =>
+    !document.querySelector(selector);
+
   window.numberTimer = new NumberFromTimer();
-  numberTimer.start();
-  numberTimer.number(
-    new Patron(
-      new GuestDisposable(
-        new Text(".eo-counter"),
-        () => !document.querySelector(".eo-counter")
-      )
-    )
-  );
   const numberInput1 = new NumberFromInput(".input-1");
   const numberInput2 = new NumberFromInput(".input-2");
   const result = new Multiplication(
     new Addition(numberInput1, numberTimer),
     numberInput2
   );
+  numberTimer.start();
+  numberTimer.number(
+    new Patron(
+      new GuestDisposable(
+        new Text(".eo-counter"),
+        disposeIfNoSelector(".eo-counter")
+      )
+    )
+  );
+  numberTimer.isStopped(
+    new Patron((isStopped) => {
+      document
+        .querySelector(".stop")
+        .classList[isStopped ? "add" : "remove"]("opacity-20");
+      document
+        .querySelector(".begin")
+        .classList[!isStopped ? "add" : "remove"]("opacity-20");
+    })
+  );
   result.number(
     new Patron(
       new GuestDisposable(
         new Text(".eo-result"),
-        () => !document.querySelector(".eo-result")
+        disposeIfNoSelector(".eo-result")
       )
     )
   );
 </script>
+
+<p class="text-gray-600 text-lg mb-0 font-bold">Листинг 1.</p>
+<pre class="mb-4"><code class="language-js">import {
+  Guest,
+  Source,
+  Patron,
+  GuestChain,
+  GuestCast,
+  GuestDisposable,
+} from "patron-oop";
+import { Text, Input } from "patron-components";
+
+// Переместил вызова наверх, чтобы не крутить до самой интересной части.
+window.numberTimer = new NumberFromTimer();
+const numberInput1 = new NumberFromInput(".input-1");
+const numberInput2 = new NumberFromInput(".input-2");
+const result = new Multiplication(
+  new Addition(numberInput1, numberTimer),
+  numberInput2
+);
+numberTimer.start();
+numberTimer.number(
+  new Patron(
+    new GuestDisposable(
+      new Text(".eo-counter"),
+      disposeIfNoSelector(".eo-counter")
+    )
+  )
+);
+result.number(
+  new Patron(
+    new GuestDisposable(
+      new Text(".eo-result"),
+      disposeIfNoSelector(".eo-result")
+    )
+  )
+);
+
+class NumberFromTimer {
+  timerHead = null;
+
+  constructor() {
+    this.source = new Source(1);
+  }
+
+  number(guest) {
+    this.source.value(guest);
+  }
+
+  start() {
+    if (this.timerHead) {
+      return;
+    }
+    const repeat = () => {
+      this.source.value((value) => {
+        this.timerHead = setTimeout(() => {
+          this.source.give(value + 1);
+          repeat();
+          if (!this.source.pool().size()) {
+            this.stop();
+          }
+        }, 1000);
+      });
+    };
+    repeat();
+  }
+
+  stop() {
+    clearTimeout(this.timerHead);
+    this.timerHead = null;
+  }
+
+  reset() {
+    this.stop();
+    this.source.give(1);
+    this.start();
+  }
+}
+
+class NumberFromInput {
+  constructor(selector) {
+    this.source = new Source(1);
+    this.input = new Input(this.source, selector);
+  }
+
+  number(guest) {
+    this.source.value(
+      new GuestCast(guest, (value) => {
+        guest.give(+value);
+      })
+    );
+  }
+}
+
+class Addition {
+  constructor(num1, num2) {
+    this.num1 = num1;
+    this.num2 = num2;
+  }
+
+  number(guest) {
+    const chain = new GuestChain();
+    this.num1.number(new GuestCast(guest, chain.receiveKey("n1")));
+    this.num2.number(new GuestCast(guest, chain.receiveKey("n2")));
+    chain.result(
+      new GuestCast(guest, ({ n1, n2 }) => {
+        guest.give(n1 + n2);
+      })
+    );
+  }
+}
+
+class Multiplication {
+  constructor(num1, num2) {
+    this.num1 = num1;
+    this.num2 = num2;
+  }
+
+  number(guest) {
+    const chain = new GuestChain();
+    this.num1.number(new GuestCast(guest, chain.receiveKey("n1")));
+    this.num2.number(new GuestCast(guest, chain.receiveKey("n2")));
+    chain.result(
+      new GuestCast(guest, ({ n1, n2 }) => {
+        guest.give(n1 * n2);
+      })
+    );
+  }
+}
+
+const disposeIfNoSelector = (selector) => () =>
+  !document.querySelector(selector);
+
+</code></pre>
