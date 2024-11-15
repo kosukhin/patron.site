@@ -126,16 +126,17 @@
         <div
           class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
         >
-          <img
-            src="./assets/img/logo.jpg"
-            width="40"
-            height="44"
-          />
           <a
             href="/"
-            class="ml-3 text-xl"
-            >Patron</a
+            class="ml-3 text-xl flex gap-2 items-center"
           >
+            <img
+              src="./assets/img/logo.jpg"
+              width="40"
+              height="44"
+            />
+            Patron
+          </a>
         </div>
         <nav
           class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 flex flex-wrap items-center text-base justify-center"
@@ -211,27 +212,36 @@
               Интеграции
             </h6>
             <div class="flex flex-col gap-2 menu">
-              <div class="flex gap-1 items-center">
+              <a
+                class="flex gap-1 items-center"
+                href="/integrations/vue"
+              >
                 <img
                   src="./assets/img/vue_16.jpg"
                   width="16"
                 />
-                <a href="/integrations/vue">Vue</a>
-              </div>
-              <div class="flex gap-1 items-center">
+                Vue
+              </a>
+              <a
+                class="flex gap-1 items-center"
+                href="/integrations/react"
+              >
                 <img
                   src="./assets/img/react_16.jpg"
                   width="16"
                 />
-                <a href="/integrations/react">React</a>
-              </div>
-              <div class="flex gap-1 items-center">
+                React
+              </a>
+              <a
+                class="flex gap-1 items-center"
+                href="/integrations/angular"
+              >
                 <img
                   src="./assets/img/angular_16.jpg"
                   width="16"
                 />
-                <a href="/integrations/angular"> Angular </a>
-              </div>
+                Angular
+              </a>
             </div>
           </div>
           <div>
@@ -241,13 +251,16 @@
               Совместимость
             </h6>
             <div class="flex flex-col gap-2 menu">
-              <div class="flex gap-1 items-center">
+              <a
+                href="/compatibility/elegant-objects"
+                class="flex gap-1 items-center"
+              >
                 <img
                   src="./assets/img/eo_16.jpg"
                   width="16"
                 />
-                <a href="/compatibility/elegant-objects">Elegant Objects</a>
-              </div>
+                Elegant Objects
+              </a>
             </div>
           </div>
           <div>
