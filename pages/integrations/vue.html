@@ -78,8 +78,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const data = ref(null);
-
-    props.source.receiving(
+    props.source.value(
       new Patron(
         new Guest(value =&gt; {
           data.value = value;
@@ -87,7 +86,6 @@ export default defineComponent({
         })
       )
     );
-
     return {
       data,
     };
