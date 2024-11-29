@@ -106,7 +106,6 @@
       rel="stylesheet"
       href="./assets/css/base.css"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
     <script type="importmap">
       {
         "imports": {
@@ -118,7 +117,7 @@
     </script>
   </head>
 
-  <body class="flex flex-col h-full global-body">
+  <body class="flex flex-col h-full global-body body-loading">
     <header class="text-gray-600 body-font">
       <div
         class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center menu"
@@ -282,9 +281,7 @@
             </div>
           </div>
           <div>
-            <h6
-              class="mb-4 flex justify-center font-semibold uppercase md:justify-start"
-            >
+            <h6 class="mb-4 flex font-semibold uppercase md:justify-start">
               Библиотеки
             </h6>
             <div class="flex flex-col gap-2 menu">
@@ -317,7 +314,7 @@
         <div
           class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row"
         >
-          <p class="text-gray-500 text-sm text-center sm:text-left">
+          <p class="text-gray-500 text-sm">
             © 2024 Patron —
             <a
               href="https://github.com/kosukhin/patron"
