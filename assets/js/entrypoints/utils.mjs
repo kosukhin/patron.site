@@ -25,6 +25,11 @@ const main = () => {
       page: new Page("Factory"),
     },
     {
+      url: "/utils/module",
+      template: "pages/utils/module.html",
+      page: new Page("Module"),
+    },
+    {
       url: "/utils/is-patron-in-pools",
       template: "pages/utils/is-patron-in-pools.html",
       page: new Page("isPatronInPools"),
