@@ -20,6 +20,11 @@ const main = () => {
       page: new Page("Source Empty"),
     },
     {
+      url: "/source/source-dynamic",
+      template: "pages/source/source-dynamic.html",
+      page: new Page("Source Dynamic"),
+    },
+    {
       url: "",
       template: "pages/404.html",
       page: new Page("Страница не найдена"),
