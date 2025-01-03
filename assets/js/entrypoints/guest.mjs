@@ -20,6 +20,11 @@ const main = () => {
       page: new Page("GuestAware"),
     },
     {
+      url: "/guest/guest-aware-active",
+      template: "pages/guest/guest-aware-active.html",
+      page: new Page("GuestAwareActive"),
+    },
+    {
       url: "/guest/guest-cast",
       template: "pages/guest/guest-cast.html",
       page: new Page("GuestCast"),
