@@ -25,6 +25,11 @@ const main = () => {
       page: new Page("GuestAwareActive"),
     },
     {
+      url: "/guest/guest-aware-map",
+      template: "pages/guest/guest-aware-map.html",
+      page: new Page("GuestAwareMap"),
+    },
+    {
       url: "/guest/guest-cast",
       template: "pages/guest/guest-cast.html",
       page: new Page("GuestCast"),
