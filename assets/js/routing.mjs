@@ -11,7 +11,7 @@ import {
 import {
   Factory,
   GuestAware,
-  GuestChain,
+  GuestAwareAll,
   GuestCast,
   Patron,
   Source,
@@ -61,7 +61,7 @@ export class EntryPointRouting {
     const link = new Link(currentPage, basePathSource);
     link.watchClick(this.menuSelector);
 
-    const urlChain = new GuestChain();
+    const urlChain = new GuestAwareAll();
     basePathSource.value(new Patron(urlChain.receiveKey("basePath")));
     currentPage.value(new Patron(urlChain.receiveKey("page")));
     const url = new GuestAware((guest) => {
