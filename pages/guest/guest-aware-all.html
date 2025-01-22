@@ -42,10 +42,10 @@ const one = new Source(1);
 const two = new Source(2);
 
 const chain = new GuestAwareAll();
-one.value(chain.receiveKey('one'));
-two.value(chain.receiveKey('two'));
+one.value(chain.guestKey('one'));
+two.value(chain.guestKey('two'));
 
-chain.result(({one, two}) => {
+chain.value(({one, two}) => {
     document
         .querySelector('.guest-result')
         .textContent = `Результат = ${one + two}`;
@@ -63,10 +63,10 @@ chain.result(({one, two}) => {
   const two = new Source(2);
 
   const chain = new GuestAwareAll();
-  one.value(chain.receiveKey("one"));
-  two.value(chain.receiveKey("two"));
+  one.value(chain.guestKey("one"));
+  two.value(chain.guestKey("two"));
 
-  chain.result(({ one, two }) => {
+  chain.value(({ one, two }) => {
     document.querySelector(".guest-result").textContent = `Результат = ${
       one + two
     }`;
@@ -87,8 +87,8 @@ const one = new Source(1);
 const two = new Source(2);
 
 const chain = new GuestAwareAll();
-one.value(chain.receiveKey('0'));
-two.value(chain.receiveKey('1'));
+one.value(chain.guestKey('0'));
+two.value(chain.guestKey('1'));
 
 chain.resultArray((numbers) => {
     document.querySelector('.guest-result-array').textContent = `Результат = ${numbers}`;
@@ -106,8 +106,8 @@ chain.resultArray((numbers) => {
   const two = new Source(2);
 
   const chain = new GuestAwareAll();
-  one.value(chain.receiveKey("0"));
-  two.value(chain.receiveKey("1"));
+  one.value(chain.guestKey("0"));
+  two.value(chain.guestKey("1"));
 
   chain.resultArray((numbers) => {
     document.querySelector(

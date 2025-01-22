@@ -62,10 +62,10 @@ export class EntryPointRouting {
     link.watchClick(this.menuSelector);
 
     const urlChain = new GuestAwareAll();
-    basePathSource.value(new Patron(urlChain.receiveKey("basePath")));
-    currentPage.value(new Patron(urlChain.receiveKey("page")));
+    basePathSource.value(new Patron(urlChain.guestKey("basePath")));
+    currentPage.value(new Patron(urlChain.guestKey("page")));
     const url = new GuestAware((guest) => {
-      urlChain.result(
+      urlChain.value(
         new GuestCast(guest, ({ basePath, page }) => {
           give(page.replace(basePath, ""), guest);
         })
