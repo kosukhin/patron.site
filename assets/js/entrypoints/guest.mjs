@@ -35,9 +35,9 @@ const main = () => {
       page: new Page("GuestCast"),
     },
     {
-      url: "/guest/guest-chain",
-      template: "pages/guest/guest-chain.html",
-      page: new Page("GuestChain"),
+      url: "/guest/guest-aware-all",
+      template: "pages/guest/guest-aware-all.html",
+      page: new Page("GuestAwareAll"),
     },
     {
       url: "/guest/guest-object",

@@ -1,7 +1,7 @@
-<h1 class="pb-3 text-xl font-semibold text-gray-600">Класс GuestChain</h1>
+<h1 class="pb-3 text-xl font-semibold text-gray-600">Класс GuestAwareAll</h1>
 
 <a
-  href="https://github.com/kosukhin/patron/blob/main/src/Guest/GuestChain.ts"
+  href="https://github.com/kosukhin/patron/blob/main/src/Guest/GuestAwareAll.ts"
   target="_blank"
   class="inline-flex gap-1 items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 mb-4"
 >
@@ -10,7 +10,7 @@
     width="16"
     height="16"
   />
-  GuestChain на GitHub
+  GuestAwareAll на GitHub
 </a>
 
 <p class="text-gray-600 text-lg mb-4">
@@ -35,13 +35,13 @@
 <p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
 <pre class="mb-4"><code class="language-js">import {
     Source,
-    GuestChain
+    GuestAwareAll
 } from 'patron-oop';
 
 const one = new Source(1);
 const two = new Source(2);
 
-const chain = new GuestChain();
+const chain = new GuestAwareAll();
 one.value(chain.receiveKey('one'));
 two.value(chain.receiveKey('two'));
 
@@ -57,12 +57,12 @@ chain.result(({one, two}) => {
   <span class="guest-result">Результат = 0</span>
 </div>
 <script type="module">
-  import { give, Patron, Source, GuestCast, GuestChain } from "patron-oop";
+  import { give, Patron, Source, GuestCast, GuestAwareAll } from "patron-oop";
 
   const one = new Source(1);
   const two = new Source(2);
 
-  const chain = new GuestChain();
+  const chain = new GuestAwareAll();
   one.value(chain.receiveKey("one"));
   two.value(chain.receiveKey("two"));
 
@@ -80,13 +80,13 @@ chain.result(({one, two}) => {
 <p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
 <pre class="mb-4"><code class="language-js">import {
     Source,
-    GuestChain
+    GuestAwareAll
 } from 'patron-oop';
 
 const one = new Source(1);
 const two = new Source(2);
 
-const chain = new GuestChain();
+const chain = new GuestAwareAll();
 one.value(chain.receiveKey('0'));
 two.value(chain.receiveKey('1'));
 
@@ -100,12 +100,12 @@ chain.resultArray((numbers) => {
   <span class="guest-result-array">Результат = 0</span>
 </div>
 <script type="module">
-  import { give, Patron, Source, GuestCast, GuestChain } from "patron-oop";
+  import { give, Patron, Source, GuestCast, GuestAwareAll } from "patron-oop";
 
   const one = new Source(1);
   const two = new Source(2);
 
-  const chain = new GuestChain();
+  const chain = new GuestAwareAll();
   one.value(chain.receiveKey("0"));
   two.value(chain.receiveKey("1"));
 
