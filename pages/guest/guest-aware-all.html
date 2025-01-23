@@ -27,9 +27,9 @@
 </p>
 
 <p class="text-gray-600 text-lg mb-4">
-  Полезное поведение в случаях когда есть множество источников данных на основе,
-  которых нужно принимать решение в момент, когда все источники отдадут свои
-  данные
+  Полезное поведение в случаях, когда есть множество источников данных, на
+  основе которых нужно принимать решение в момент, когда все источники отдадут
+  свои данные
 </p>
 
 <p class="text-gray-600 text-lg mb-0 font-bold">Пример 1.</p>
@@ -41,11 +41,11 @@
 const one = new Source(1);
 const two = new Source(2);
 
-const chain = new GuestAwareAll();
-one.value(chain.guestKey('one'));
-two.value(chain.guestKey('two'));
+const all = new GuestAwareAll();
+one.value(all.guestKey('one'));
+two.value(all.guestKey('two'));
 
-chain.value(({one, two}) => {
+all.value(({one, two}) => {
     document
         .querySelector('.guest-result')
         .textContent = `Результат = ${one + two}`;
@@ -62,11 +62,11 @@ chain.value(({one, two}) => {
   const one = new Source(1);
   const two = new Source(2);
 
-  const chain = new GuestAwareAll();
-  one.value(chain.guestKey("one"));
-  two.value(chain.guestKey("two"));
+  const all = new GuestAwareAll();
+  one.value(all.guestKey("one"));
+  two.value(all.guestKey("two"));
 
-  chain.value(({ one, two }) => {
+  all.value(({ one, two }) => {
     document.querySelector(".guest-result").textContent = `Результат = ${
       one + two
     }`;
@@ -86,11 +86,11 @@ chain.value(({one, two}) => {
 const one = new Source(1);
 const two = new Source(2);
 
-const chain = new GuestAwareAll();
-one.value(chain.guestKey('0'));
-two.value(chain.guestKey('1'));
+const all = new GuestAwareAll();
+one.value(all.guestKey('0'));
+two.value(all.guestKey('1'));
 
-chain.resultArray((numbers) => {
+all.valueArray((numbers) => {
     document.querySelector('.guest-result-array').textContent = `Результат = ${numbers}`;
 });
 </code></pre>
@@ -102,18 +102,20 @@ chain.resultArray((numbers) => {
 <script type="module">
   import { give, Patron, Source, GuestCast, GuestAwareAll } from "patron-oop";
 
-  const one = new Source(1);
-  const two = new Source(2);
+  (() => {
+    const one = new Source(1);
+    const two = new Source(2);
 
-  const chain = new GuestAwareAll();
-  one.value(chain.guestKey("0"));
-  two.value(chain.guestKey("1"));
+    const all = new GuestAwareAll();
+    one.value(all.guestKey("0"));
+    two.value(all.guestKey("1"));
 
-  chain.resultArray((numbers) => {
-    document.querySelector(
-      ".guest-result-array"
-    ).textContent = `Результат = ${numbers}`;
-  });
+    all.valueArray((numbers) => {
+      document.querySelector(
+        ".guest-result-array"
+      ).textContent = `Результат = ${numbers}`;
+    });
+  })();
 </script>
 
 <div class="font-bold mt-8">Смотрите также</div>
