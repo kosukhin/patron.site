@@ -20,6 +20,11 @@ const main = () => {
       page: new Page("give функция"),
     },
     {
+      url: "/utils/value",
+      template: "pages/utils/value.html",
+      page: new Page("value функция"),
+    },
+    {
       url: "/utils/factory",
       template: "pages/utils/factory.html",
       page: new Page("Factory"),
