@@ -194,10 +194,10 @@
     }
 
     number(guest) {
-      const chain = new GuestAwareAll();
-      this.num1.number(new GuestCast(guest, chain.guestKey("n1")));
-      this.num2.number(new GuestCast(guest, chain.guestKey("n2")));
-      chain.value(
+      const all = new GuestAwareAll();
+      this.num1.number(new GuestCast(guest, all.guestKey("n1")));
+      this.num2.number(new GuestCast(guest, all.guestKey("n2")));
+      all.value(
         new GuestCast(guest, ({ n1, n2 }) => {
           guest.give(n1 + n2);
         })
@@ -212,10 +212,10 @@
     }
 
     number(guest) {
-      const chain = new GuestAwareAll();
-      this.num1.number(new GuestCast(guest, chain.guestKey("n1")));
-      this.num2.number(new GuestCast(guest, chain.guestKey("n2")));
-      chain.value(
+      const all = new GuestAwareAll();
+      this.num1.number(new GuestCast(guest, all.guestKey("n1")));
+      this.num2.number(new GuestCast(guest, all.guestKey("n2")));
+      all.value(
         new GuestCast(guest, ({ n1, n2 }) => {
           guest.give(n1 * n2);
         })
@@ -363,10 +363,10 @@ class Addition {
   }
 
   number(guest) {
-    const chain = new GuestAwareAll();
-    this.num1.number(new GuestCast(guest, chain.guestKey("n1")));
-    this.num2.number(new GuestCast(guest, chain.guestKey("n2")));
-    chain.value(
+    const all = new GuestAwareAll();
+    this.num1.number(new GuestCast(guest, all.guestKey("n1")));
+    this.num2.number(new GuestCast(guest, all.guestKey("n2")));
+    all.value(
       new GuestCast(guest, ({ n1, n2 }) => {
         guest.give(n1 + n2);
       })
@@ -381,10 +381,10 @@ class Multiplication {
   }
 
   number(guest) {
-    const chain = new GuestAwareAll();
-    this.num1.number(new GuestCast(guest, chain.guestKey("n1")));
-    this.num2.number(new GuestCast(guest, chain.guestKey("n2")));
-    chain.value(
+    const all = new GuestAwareAll();
+    this.num1.number(new GuestCast(guest, all.guestKey("n1")));
+    this.num2.number(new GuestCast(guest, all.guestKey("n2")));
+    all.value(
       new GuestCast(guest, ({ n1, n2 }) => {
         guest.give(n1 * n2);
       })
