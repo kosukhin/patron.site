@@ -45,6 +45,11 @@ const main = () => {
       page: new Page("GuestAwareRace"),
     },
     {
+      url: "/guest/guest-aware-sequence",
+      template: "pages/guest/guest-aware-sequence.html",
+      page: new Page("GuestAwareSequence"),
+    },
+    {
       url: "/guest/guest-object",
       template: "pages/guest/guest-object.html",
       page: new Page("GuestObject"),
