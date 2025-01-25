@@ -45,6 +45,16 @@ const main = () => {
       page: new Page("removePatronFromPools"),
     },
     {
+      url: "/utils/is-guest-aware",
+      template: "pages/utils/is-guest-aware.html",
+      page: new Page("isGuestAware"),
+    },
+    {
+      url: "/utils/is-guest",
+      template: "pages/utils/is-guest.html",
+      page: new Page("isGuest"),
+    },
+    {
       url: "",
       template: "pages/404.html",
       page: new Page("Страница не найдена"),
