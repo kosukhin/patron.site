@@ -14,6 +14,11 @@ const main = () => {
             template: "pages/examples/index.html",
             page: new Page("Примеры"),
         },
+        {
+            url: "/examples/errors",
+            template: "pages/examples/errors.html",
+            page: new Page("Обработка ошибок"),
+        },
     ]);
 };
 
