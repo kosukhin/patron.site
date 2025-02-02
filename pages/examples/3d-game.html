@@ -1,0 +1,30 @@
+<h1 class="pb-3 text-xl font-semibold text-gray-600">3D игра</h1>
+
+<pre class="state"></pre>
+
+<script type="module">
+  import { Source, Patron } from "patron-oop";
+
+  const gameState = new Source({
+    targets: [],
+    player: {
+      position: {
+        x: 0,
+        y: 0,
+        z: 0,
+      },
+      rotation: {
+        x: 0,
+        y: 0,
+        z: 0,
+      },
+      speed: 10,
+    },
+  });
+
+  gameState.value(
+    new Patron((v) => {
+      document.querySelector(".state").textContent = JSON.stringify(v, null, 2);
+    })
+  );
+</script>

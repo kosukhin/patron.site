@@ -19,6 +19,11 @@ const main = () => {
             template: "pages/examples/errors.html",
             page: new Page("Обработка ошибок"),
         },
+        {
+            url: "/examples/3d-game",
+            template: "pages/examples/3d-game.html",
+            page: new Page("3D игра"),
+        },
     ]);
 };
 
