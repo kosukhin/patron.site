@@ -15,6 +15,11 @@ const main = () => {
       page: new Page("Elegant Objects"),
     },
     {
+      url: "/compatibility/dip",
+      template: "pages/compatibility/dip.html",
+      page: new Page("DIP"),
+    },
+    {
       url: "",
       template: "pages/404.html",
       page: new Page("Страница не найдена"),
