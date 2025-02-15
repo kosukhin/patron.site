@@ -25,14 +25,9 @@ const main = () => {
       page: new Page("value функция"),
     },
     {
-      url: "/utils/factory",
-      template: "pages/utils/factory.html",
-      page: new Page("Factory"),
-    },
-    {
-      url: "/utils/module",
-      template: "pages/utils/module.html",
-      page: new Page("Module"),
+      url: "/utils/private",
+      template: "pages/utils/private.html",
+      page: new Page("Private"),
     },
     {
       url: "/utils/is-patron-in-pools",
