@@ -9,7 +9,7 @@ import {
   Visible,
 } from "patron-components";
 import {
-  Factory,
+  PrivateClass,
   GuestAware,
   GuestAwareAll,
   GuestCast,
@@ -54,7 +54,7 @@ export class EntryPointRouting {
       basePathSource,
       currentPage,
       new RouteDisplay(this.navigationResultSelector),
-      new Factory(PageFetchTransport)
+      new PrivateClass(PageFetchTransport)
     );
     navigation.routes(routes);
 
